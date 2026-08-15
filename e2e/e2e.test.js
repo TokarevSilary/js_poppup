@@ -11,7 +11,9 @@ describe("test of puppeter", () => {
   const browserUrl = "http://localhost:8087";
   beforeAll(async () => {
     server = fork(`${__dirname}/e2e.server.js`);
-    browser = await puppeteer.launch({});
+    browser = browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     page = await browser.newPage();
     await new Promise((resolve, reject) => {
       if (server.connected) {
