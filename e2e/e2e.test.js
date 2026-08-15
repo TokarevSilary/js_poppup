@@ -15,13 +15,12 @@ describe("test of puppeter", () => {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     page = await browser.newPage();
-    await new Promise((resolve, reject) => {
-      if (server.connected) {
-        process.send("ok");
-        resolve();
-      } else {
-        reject();
-      }
+    await new Promise((resolve) => {
+      server.on("message", (msg) => {
+        if (msg === "server-ready") {
+          resolve();
+        }
+      });
     });
   });
   afterAll(async () => {

@@ -10,6 +10,9 @@ const server = new WebpackDevServer(devServerOptions, compiler);
 const runServer = async () => {
   console.log("Running server at port: ", PORT);
   await server.start();
+  if (process.send) {
+    process.send("server-ready");
+  }
 };
 
 runServer();
